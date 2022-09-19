@@ -1,0 +1,135 @@
+<%- include('./includes/head.ejs') %>
+<link rel="stylesheet" href="/assets/css/<%= css %>.css">
+</head>
+
+<body>
+<%- include('./includes/navigation.ejs') %>
+
+<div class="statistic-content">
+    <div class="wildcard-container">
+     
+        <form id="wildcard" action="/statistic-search" method="GET">
+            <label for="date">Tra cứu </label>
+                <select name="type" id="category">
+                    <option value="jobDetail">thông tin giờ làm</option>
+                    <option value="monthSalary">lương tháng</option>
+                </select>
+            <input type="text" name="search" id="search">
+            <input type="submit" value="Tìm">
+        </form>
+    <em>(Tra cứu thông tin làm việc theo ngày, tháng, năm))</em>         
+
+    </div>
+
+    <div class="statistic-wrapper">
+        <% if (statistics.length === 0){ %>
+            <h2>Không có dữ liệu</h2>
+        <% }else{ %>
+            <table>
+                <!-- BEGIN: TABLE HEAD -->
+                <thead>
+                    <tr>
+                        <th>Ngày (mm/dd/yyyy)</th>
+                        <th>Nơi làm việc</th>
+                        <th>Giờ bắt đầu</th>
+                        <th>Giờ kết thúc</th>
+                        <th>Thời gian làm việc</th>
+                        <th>Lương ngày</th>   
+                    </tr>
+                </thead>
+
+                <!-- END: TABLE HEAD -->
+                <!-- BEGIN: TABLE BODY -->
+                <tbody>
+                    <% statistics.forEach(item => { %>
+                        <% if(item.attend && item.details.length > 1){ %>
+                            <!-- FIRST ROW -->
+                            <tr>
+                                <td rowspan="<%= item.details.length + 1 %>"><%= item.date %></td>
+                                <td><%= item.details[0].workplace %></td>
+                                <td><%= item.details[0].startTime.toLocaleTimeString() %></td>
+                                <% if(item.details[0].endTime) { %>
+                                    <td><%= item.details[0].endTime.toLocaleTimeString() %></td>
+                                    <td><%= ((item.details[0].endTime - item.details[0].startTime)/(3600 * 1000)).toFixed(1) %></td>
+                                    <td rowspan="<%= item.details.length + 1 %>"><%= item.salary.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></td>
+                                <% }else { %>
+                                    <td>--</td>
+                                    <td>--</td>
+                                <%} %>
+                            </tr>
+                            <!-- END: FIRST ROW -->
+                            <!-- BEGIN: OTHER ROW -->
+                            <% item.details.forEach((detail,index) => { %>
+                                <% if(index !== 0){ %>
+                                    <tr>
+                                        <td><%= detail.workplace %></td>
+                                        <td><%= detail.startTime.toLocaleTimeString() %></td>
+                                        <% if(detail.endTime) { %>
+                                            <td><%= detail.endTime.toLocaleTimeString() %></td>
+                                            <td><%= ((detail.endTime - detail.startTime)/(3600 * 1000)).toFixed(1) %></td>
+                                            
+                                        <% }else { %>
+                                            <td>--</td>
+                                            <td>--</td>
+                                        <%} %>
+                                    </tr>
+                                <% } %>
+                            <% }) %>
+                            <!-- END: OTHER ROW -->
+                            <!-- BEGIN: TOTAL ROW -->
+                            <% if(item.details[0].endTime){%>
+                                <% const totalTime = item.details.reduce((total, detail) => {
+                                    return total + ((detail.endTime - detail.startTime)/(3600 * 1000));
+                                }, 0).toFixed(1); %>
+                                <%- include('./includes/finishTime.ejs', {totalTime}) %>
+                            <%} else{ %>
+                                <%- include('./includes/unfinishTime.ejs') %>
+                            <% }%>
+                            <!-- END: TOTAL ROW -->
+                        <% }else if(item.attend){ %>
+                            <tr>
+                                <td rowspan="2"><%= item.date %></td>
+                                <td><%= item.details[0].workplace %></td>
+                                <td><%= item.details[0].startTime.toLocaleTimeString() %></td>
+                                <% if(item.details[0].endTime) { %>
+                                    <td><%= item.details[0].endTime.toLocaleTimeString() %></td>
+                                    <td><%= ((item.details[0].endTime - item.details[0].startTime)/(3600 * 1000)).toFixed(1) %></td>
+                                    <td rowspan="<%= item.details.length + 1 %>"><%= item.salary.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></td>
+                                <% }else { %>
+                                    <td>--</td>
+                                    <td>--</td>
+                                    <td rowspan="2">--</td>
+                                <%} %>
+                            </tr>
+                            <% if(item.details[0].endTime){ %>
+                                <% const totalTime = ((item.details[0].endTime - item.details[0].startTime)/(3600 * 1000)).toFixed(1) %>
+                                <%- include('./includes/finishTime.ejs', {totalTime}) %>
+                            <% } else {%>
+                                <%- include('./includes/unfinishTime.ejs') %>
+                            <% } %>
+                        <% }else { %>
+                            <tr>
+                                <td><%= item.date %></td>
+                                <td class="warning">Nghỉ phép</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        <% } %> 
+                    <% }) %>
+                </tbody>
+
+                <tfoot>
+                    <% if (type === 'monthSalary') { %>
+                        <th style="background:#55555578;" colspan="6">Lương tháng <%= month %>: <%= statistics.monthSalary.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %> </th>
+                    <% } %> 
+                </tfoot>
+            </table>
+
+        <%} %>
+    </div>
+  
+
+</div>
+

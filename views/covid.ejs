@@ -1,0 +1,87 @@
+<%- include('./includes/head.ejs') %>
+
+<link rel="stylesheet" href="/assets/css/<%= css %>.css">
+</head>
+
+<body>
+<%- include('./includes/navigation.ejs') %>
+<div class="covid-content">
+  <div class="covid-title">
+      <h3><%= user.name %></h3>
+      <a href="/covid-details">Chi tiết</a>
+  </div>
+
+  <div class="covid-vaccine">
+    <img src="/assets/images/vaccinated.png" alt="">
+    <span>Đã tiêm <strong><%= vaccine.length%></strong> mũi</span>
+  </div>  
+
+  <div class="covid-wrapper">
+    <div class="covid-item">
+      <h3>Đăng ký thông tin thân nhiệt</h3>
+      <form action="/covid?type=temperature" method="POST">
+        <div class="form-group">
+          <label for="temperature">Thân nhiệt</label>
+          <input
+            required
+            type="number"
+            class="form-control"
+            id="temperature"
+            name="temperature"
+            placeholder="37oC"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Đăng ký</button>
+      </form>
+    </div>
+
+    <div class="covid-item">
+      <h3>Đăng ký thông tin dương tính Covid</h3>
+      <form action="/covid?type=positive" method="POST">
+        <div class="form-group">
+          <label for="temperature">Ngày phát hiện dương tính</label>
+          <input
+            required
+            type="date"
+            class="form-control"
+            id="positive"
+            name="positive"
+            placeholder="Ngày dương tính"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Đăng ký</button>
+      </form>
+    </div>
+
+    <div class="covid-item">
+      <h3>Đăng ký thông tin tiêm vaccine</h3>
+      <form action="/covid?type=vaccine" id="vaccine-details" method="POST">
+        <h4>Mũi <%= vaccine.length + 1 %> </h4>
+        <div class="form-group">
+          <label for="vaccineDate1">Ngày tiêm Vaccine</label>
+          <input
+            required
+            type="date"
+            class="form-control"
+            id="vaccineDate"
+            name="vaccineDate"
+          />
+        </div>
+        <div class="form-group">
+          <label for="vaccineName1">Tên Vaccine</label>
+            <select class="form-control" name="vaccineName" id="vaccineName" required>
+              <option value="AstraZeneca">AstraZeneca</option>
+              <option value="Sputnik V">Sputnik V</option>
+              <option value="Vero Cell">Vero Cell</option>
+              <option value="Pfizer">Pfizer</option>
+            </select>
+        </div>
+        <input type="hidden" name="vaccineType1" value="1">
+        <button type="submit">Đăng ký</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<%- include('./includes/footer.ejs') %>

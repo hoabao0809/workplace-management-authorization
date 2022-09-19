@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Josefin Sans', sans-serif;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background:#73707035;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #55555578;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  margin-top: 2.5rem;
+}
+
+h4 {
+  margin: 0;
+}
+
+@media (min-width: 1200px) {
+  .container-fluid {
+    padding: 0;
+  }
+
+  .container {
+    max-width: 95%;
+  }
+}
+
+section {
+  height: 100%;
+  background: #f0f2f5;
+}
+
+.navbar {
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  font-size: 1rem;
+  object-fit: 100%;
+}
+
+.page-content {
+  display: flex;
+  padding: 0;
+}
+
+.navigation {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60%;
+  height: 100%;
+  background: #fff;
+  box-shadow: 0 1px 2px #00000033;
+  padding: 1rem;
+  text-align: left;
+  transition: all 300ms ease;
+  z-index: 10;
+  opacity: 0;
+  overflow: hidden;
+  clip-path: polygon(100% 100%, 100% 100%, 100% 0, 100% 0);
+}
+
+.fa-bars {
+  font-size: 1.5rem;
+  color: #000000ab;
+  cursor: pointer;
+}
+
+.fa-bars:hover {
+  color: black;
+}
+
+.close {
+  cursor: pointer;
+}
+
+
+.nav-item {
+  font-size: 1.2rem;
+  transition: all 300ms ease;
+}
+
+.nav-item:hover {
+  background: #e4e6e9;
+  border-radius: 10px;
+}
+
+.navigation .nav-link {
+  padding: 1rem;
+  color: black;
+}
+
+.nav-link h4 {
+  font-size: 1rem;
+}
+
+.main {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 2rem auto;
+}
+
+footer {
+  height: 50vh;
+  background: #f0f2f5;
+}
+
+@media screen and (min-width: 768px) {
+  .navigation {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .navigation {
+    padding: 0 0;
+    position: relative;
+    background: #f0f2f5;
+    box-shadow: none;
+    opacity: 1;
+    clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 0);
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+
+  .close {
+    display: none;
+  }
+
+  .nav-link h4 {
+    font-size: 1.5rem;
+  }
+}

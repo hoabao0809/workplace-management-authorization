@@ -1,0 +1,91 @@
+<%- include('./includes/head.ejs') %>
+<link rel="stylesheet" href="/assets/css/covid.css">
+
+</head>
+
+<body>
+    <%- include('./includes/navigation.ejs') %>
+    <div class="covid-content">
+        <div class="covid-title">
+            <h2><%= user.name %></h2>
+        </div>
+
+    <div class="covid-vaccine">
+        <img src="/assets/images/vaccinated.png" alt="">
+        <span>Đã tiêm <strong><%= covid.vaccine.length%></strong> mũi</span>
+    </div>  
+                
+
+    <div class="covid-wrapper">
+            <div class="covid-item">
+                <h3>Nhiệt độ cơ thể</h3>
+                <div class="covid-detail">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ngày đăng ký</th>
+                                <th>Giờ đăng ký</th>
+                                <th>Nhiệt độ cơ thể</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% covid.bodyTemps.forEach(item => { %>
+                                <tr>
+                                    <td><%= item.date.toLocaleDateString() %></td>
+                                    <td><%= item.date.toLocaleTimeString() %></td>
+                                    <td><%= item.temperature %> <sup>o</sup>C</td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+
+            <div class="covid-item">
+                <h3>Tiêm vaccine</h3>
+                <div class="covid-detail">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ngày tiêm</th>
+                                <th>Loại mũi vaccine</th>
+                                <th>Tên vaccine</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                
+                            <% covid.vaccine.forEach((item, index) => { %>
+                                <% if(item.name) { %>
+                                    <tr>
+                                        <td><%= item.date.toLocaleDateString() %></td>
+                                        <td>Mũi <%= (index + 1) %></td>
+                                        <td><%= item.name %></td>
+                                    </tr>
+                                <% } %>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="covid-item">
+                <h3>Dương tính Covid</h3>
+                <div class="covid-detail">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ngày dương tính</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% covid.positive.forEach(item => { %>
+                                <tr>
+                                    <td><%= item.date.toLocaleDateString() %></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include('./includes/footer.ejs') %>

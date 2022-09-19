@@ -1,0 +1,74 @@
+<%- include('./includes/head.ejs') %>
+<link rel="stylesheet" href="/assets/css/home.css">
+<link rel="stylesheet" href="/assets/css/<%= css %>.css">
+</head>
+
+<body>
+<%- include('./includes/navigation.ejs') %>
+  <div class="cardDetail">
+    <div class="img">
+      <img src="<%= user.image[0] %>" alt="avatar" id="avatarImg">
+     </div>
+    <div class="infos">
+      <div class="name">
+        <h2><%= user.name %></h2>
+      </div>
+      <div class="details">
+              <p>Ngày sinh: <%= user.doB.toLocaleDateString() %></p>
+              <p>Hệ số lương: <%= user.salaryScale %></p>
+              <p>Ngày vào làm việc: <%= user.startDate.toLocaleDateString() %></p>
+              <p>Bộ phận: <%= user.department %></p>
+              <p>Số ngày nghỉ phép: <%= user.annualLeave %></p>
+      </div>
+  
+    </div>
+    <div class="button">
+      <form action="/user-detail" method="POST" enctype="multipart/form-data">
+        <div class="imageUpload">
+             <input type="file" class="form-control" name="image" id="imageUpload" >
+             <input type="hidden" name="id" value="<%= user._id %>">
+        </div>
+        <div class="saveImg">
+            <button class="btn btn-primary" type="submit">Save</button>
+            <button class="btn btn-warning" type="button" id="cancel">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="cardMobile home">
+    <div class="wrapper">
+      <div class="card">
+        <div class="img">
+          <img src="<%= user.image[0] %>" alt="Employee_ID">
+        </div>
+        <div class="details">
+          <div class="details__item">
+            <span>Ngày sinh: <%= user.doB.toLocaleDateString() %></span>
+            <span>Hệ số lương: <%= user.salaryScale %></span>
+            <span>Ngày vào làm việc: <%= user.startDate.toLocaleDateString() %></span>
+            <span>Bộ phận: <%= user.department %></span>
+            <span>Số ngày nghỉ phép: <%= user.annualLeave %></span>
+          </div>
+        </div>
+        <div class="button">
+          <form action="/user-detail" method="POST" enctype="multipart/form-data">
+            <div class="imageUpload">
+                 <input type="file" class="form-control" name="image" id="imageUpload" >
+                 <input type="hidden" name="id" value="<%= user._id %>">
+            </div>
+            <div class="saveImg">
+                <button class="btn btn-primary" type="submit">Save</button>
+                <button class="btn btn-warning" type="button" id="cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+        <div class="info">
+          <p><%= user.name %></p>
+        </div>
+      </div>
+</div>   
+</div>
+  
+
+<%- include('./includes/footer.ejs') %>

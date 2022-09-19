@@ -1,0 +1,47 @@
+<%- include('./includes/head.ejs') %>
+<link rel="stylesheet" href="/assets/css/<%= css %>.css">
+</head>
+
+<body>
+<%- include('./includes/navigation.ejs') %>
+
+<div class="home attendance" >
+  <div class="wrapper">
+    <div class="card">
+      <img class="card-img" src="<%= user.image[0] %>" alt="Employee_ID">
+      <% if (user.isWorking) { %>
+          <span class="status online">IN</span>
+        <% } else { %>
+          <span class="status">OUT</span>
+      <% } %>
+      <div class="details">
+        <% if (user.isWorking) { %>
+          <label>Kết thúc công việc</label>
+          <form action="/attendance?type=checkOut" method="POST">
+            <input class="checkout" type="submit" value="Kết thúc" />
+          </form>
+        <% } else { %>
+          <form action="/attendance?type=checkIn" method="POST">
+            <label for="workplace">Lựa chọn nơi làm việc</label>
+
+            <select name="workplace" id="workplace" required>
+              <option value="Công ty">Công ty</option>
+              <option value="Nhà">Nhà</option>
+              <option value="Khách hàng">Khách hàng</option>
+            </select>
+            <input class="checkout start" type="submit" value="Bắt đầu" />
+          </form>
+          <% } %>
+      </div>
+      <div class="offduty">
+        <a href="/absence">Đăng ký nghỉ phép</a>
+      </div>
+
+      <div class="info">
+        <p><%= user.name %></p>
+      </div>
+    </div>
+</div>   
+</div>
+</div>
+<%- include('./includes/footer.ejs') %>
