@@ -1,7 +1,7 @@
 const Attendance = require('../models/attendance');
 
 exports.getAttendance = (req, res, next) => {
-  res.render('attendance', {
+  res.render('attendance/attendance', {
     user: req.user,
     pageTitle: 'Đăng ký làm việc',
     css: 'home',
@@ -20,7 +20,7 @@ exports.postAttendance = (req, res, next) => {
           res.redirect('/');
           return;
         case 'checkOut':
-          res.redirect('/attendance-details');
+          res.redirect('attendance/attendance-details');
           return;
       }
     })
@@ -31,7 +31,7 @@ exports.getAttendanceDetails = (req, res, next) => {
   req.user
     .getAttendanceDetails()
     .then((attendance) => {
-      res.render('attendance-details', {
+      res.render('attendance/attendance-details', {
         attendance,
         pageTitle: 'Dữ liệu giờ làm',
         css: 'attendance-details',

@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const dbConnect = require('./util/database');
 const userRoutes = require('./routes/index');
+const authRoutes = require('./routes/auth');
 
 const User = require('./models/user');
 
@@ -22,6 +23,7 @@ app.use(userController.checkedIn);
 
 // Routes
 app.use(userRoutes);
+app.use(authRoutes);
 
 // Connect to mongoDb
 dbConnect()

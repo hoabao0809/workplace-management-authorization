@@ -2,7 +2,11 @@ const User = require('../models/user');
 const Status = require('../models/status');
 
 exports.getHome = (req, res) => {
-  res.render('home', { pageTitle: 'Trang chủ', user: req.user, css: 'home' });
+  res.render('user/home', {
+    pageTitle: 'Trang chủ',
+    user: req.user,
+    css: 'home',
+  });
 };
 
 // check whether user has checked in?
@@ -38,7 +42,7 @@ exports.checkedIn = (req, res, next) => {
 exports.getUserDetail = (req, res) => {
   User.findById(req.user._id)
     .then((user) => {
-      res.render('user-detail', {
+      res.render('user/user-detail', {
         pageTitle: 'Chi tiết nhân viên',
         user,
         css: 'user-detail',
@@ -60,7 +64,7 @@ exports.postUserDetail = (req, res) => {
 
 exports.getStatistics = (req, res) => {
   req.user.getStatistics(null).then((statistics) => {
-    res.render('statistics', {
+    res.render('statistics/statistics', {
       pageTitle: 'Tra cứu thông tin làm việc',
       css: 'statistics',
       user: req.user,
@@ -73,7 +77,7 @@ exports.getStatistics = (req, res) => {
 exports.setStatisticSearch = (req, res) => {
   const { type, search } = req.query;
   req.user.getStatistics({ type, search }).then((statistics) => {
-    res.render('statistics', {
+    res.render('statistics/statistics', {
       pageTitle: 'Tìm kiếm thông tin',
       css: 'statistics',
       user: req.user,

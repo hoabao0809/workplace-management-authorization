@@ -52,7 +52,7 @@ userSchema.methods.checkStatus = function (type, workplace) {
             _status.isWorking = true;
             return _status.save();
           })
-          .catch((err) => console.log(err));
+          .catch((err) => console.log(err)); 
 
       case 'checkOut':
         return this.checkOut(currAttendId, new Date())

@@ -15,7 +15,7 @@ exports.getCovid = (req, res) => {
       return covid;
     })
     .then((covid) => {
-      res.render('covid', {
+      res.render('covid/covid', {
         pageTitle: 'Thông tin COVID-19',
         css: 'covid',
         user: req.user,
@@ -45,7 +45,7 @@ exports.postCovid = (req, res, next) => {
       return covid.save();
     })
     .then((covid) => {
-      res.redirect('/covid-details');
+      res.redirect('covid/covid-details');
     })
     .catch((err) => console.log(err));
 };
@@ -69,7 +69,7 @@ exports.getCovidDetails = (req, res, next) => {
       }
     })
     .then((covid) => {
-      res.render(`covid-details`, {
+      res.render(`covid/covid-details`, {
         css: 'covid',
         pageTitle: 'Thông tin Covid',
         user: req.user,
