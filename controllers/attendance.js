@@ -20,7 +20,7 @@ exports.postAttendance = (req, res, next) => {
           res.redirect('/');
           return;
         case 'checkOut':
-          res.redirect('attendance/attendance-details');
+          res.redirect('attendance-details');
           return;
       }
     })

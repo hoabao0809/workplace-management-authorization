@@ -6,7 +6,9 @@
       </a>
     </div>
     <div class="login">
-      <a href="/login">Login</a>
+      <% if(isAuthenticated) { %>
+        <a href="/logout">Logout</a>
+      <% } %>
     </div>
     <div class="nav-toggle">
       <i class="fa fa-bars"></i>
@@ -50,4 +52,5 @@
         </li>
       </ul>
     </div>
+
     <div class="main col-lg-8">

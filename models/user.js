@@ -31,6 +31,10 @@ const userSchema = new Schema({
     required: true,
   },
   image: [{ type: String, required: true }],
+  role: {
+    type: String,
+    required: true
+  }
 });
 
 userSchema.methods.checkStatus = function (type, workplace) {

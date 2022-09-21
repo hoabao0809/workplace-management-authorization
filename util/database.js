@@ -1,10 +1,12 @@
+const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config();
+
 const mongoose = require('mongoose');
+const MONGODB_URI = process.env.MONGODB_URI;
 
 const mongooseConnect = () => {
-  return mongoose.connect(
-    'mongodb+srv://hoabao0809:admin1234@hrmapp.ataq6on.mongodb.net/test?retryWrites=true&w=majority'
-  );
+  return mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 };
 
 module.exports = mongooseConnect;
- 

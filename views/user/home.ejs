@@ -6,6 +6,11 @@
 <body>
 <%- include('../includes/navigation.ejs') %>
 
+<% if(!isAuthenticated) { %>
+  <div class="">
+    <h2>Welcome back to FUNiX</h2>
+  </div>
+<% } else { %>
 <div class="home">
             <div class="wrapper">
               <div class="card">
@@ -36,6 +41,8 @@
     </div>   
 </div>
 </div>
+<% } %>
+
 
 <%- include('../includes/footer.ejs') %>
 

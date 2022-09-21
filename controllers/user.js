@@ -11,12 +11,14 @@ exports.getHome = (req, res) => {
 
 // check whether user has checked in?
 exports.checkedIn = (req, res, next) => {
-  User.findById('62fa04cd85d21aefed61f0ca')
+  // User.findById('632ac97971a4e1ccad3b5c72')
+  User.findOne()
     .then((user) => {
-      if (user) {
-        req.user = user;
-        return Status.findOne({ userId: user._id });
+      if (!user) {
+        next()
       }
+      req.user = user;
+      return Status.findOne({ userId: user._id });
     })
     .then((result) => {
       if (!result) {

@@ -7,8 +7,9 @@ const userController = require('../controllers/user');
 const attendanceController = require('../controllers/attendance');
 const absenceController = require('../controllers/absence');
 const covidController = require('../controllers/covid');
+const authController = require('../controllers/auth');
 
-// Multer lib: save image 
+// Multer lib: save image
 const imageStorage = multer.diskStorage({
   destination: 'public/assets/images/avatars/',
   filename: (req, file, cb) => {
@@ -24,29 +25,66 @@ const upload = multer({
 router.get('/', userController.getHome);
 
 // Attendance page
-router.get('/attendance', attendanceController.getAttendance);
-router.post('/attendance', attendanceController.postAttendance);
-router.get('/attendance-details', attendanceController.getAttendanceDetails);
+router.get(
+  '/attendance',
+  authController.didLoggedIn,
+  attendanceController.getAttendance
+);
+router.post(
+  '/attendance',
+  authController.didLoggedIn,
+  attendanceController.postAttendance
+);
+router.get(
+  '/attendance-details',
+  authController.didLoggedIn,
+  attendanceController.getAttendanceDetails
+);
 
 // Absence Page
-router.get('/absence', absenceController.getAbsence);
-router.post('/absence', absenceController.postAbsence);
+router.get(
+  '/absence',
+  authController.didLoggedIn,
+  absenceController.getAbsence
+);
+router.post(
+  '/absence',
+  authController.didLoggedIn,
+  absenceController.postAbsence
+);
 
 // USer detail
-router.get('/user-detail', userController.getUserDetail);
+router.get(
+  '/user-detail',
+  authController.didLoggedIn,
+  userController.getUserDetail
+);
 router.post(
   '/user-detail',
+  authController.didLoggedIn,
   upload.single('image'),
   userController.postUserDetail
 );
 
 // Statistic
-router.get('/statistics', userController.getStatistics);
-router.get('/statistic-search', userController.setStatisticSearch)
+router.get(
+  '/statistics',
+  authController.didLoggedIn,
+  userController.getStatistics
+);
+router.get(
+  '/statistic-search',
+  authController.didLoggedIn,
+  userController.setStatisticSearch
+);
 
 // Covid page
-router.get('/covid', covidController.getCovid);
-router.get('/covid-details', covidController.getCovidDetails);
-router.post('/covid', covidController.postCovid);
+router.get('/covid', authController.didLoggedIn, covidController.getCovid);
+router.get(
+  '/covid-details',
+  authController.didLoggedIn,
+  covidController.getCovidDetails
+);
+router.post('/covid', authController.didLoggedIn, covidController.postCovid);
 
 module.exports = router;
