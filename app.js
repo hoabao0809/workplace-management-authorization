@@ -9,18 +9,23 @@ const userRoutes = require('./routes/index');
 const authRoutes = require('./routes/auth');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const csrf = require('csurf');
+const flash = require('connect-flash');
 
 const User = require('./models/user');
+const Admin = require('./models/admin');
 
 const userController = require('./controllers/user');
 
 const app = express();
 
+// Store session in database
 const MONGODB_URI = process.env.MONGODB_URI;
 const store = new MongoDBStore({
   uri: MONGODB_URI,
   collection: 'sessions',
 });
+const csrfProtection = csrf();
 
 // Template engine
 app.set('view engine', 'ejs');
@@ -37,10 +42,31 @@ app.use(
     store,
   })
 );
+app.use(csrfProtection);
+app.use(flash());
 
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
   next();
+});
+
+app.use((req, res, next) => {
+  if (!req.session.user) {
+    return next();
+  }
+  User.findById(req.session.user._id)
+    .then((user) => {
+      if (!user) {
+        return next();
+      }
+      console.log('user: ', user);
+      req.user = user;
+      next();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 app.use(userController.checkedIn);
@@ -63,7 +89,9 @@ dbConnect()
             department: 'IT',
             annualLeave: 13,
             image: ['/assets/images/avatars/avatar.png'],
-            role: 'admin',
+            role: 'staff',
+            email: 'abcd1234@gmail.com',
+            password: 'abcd1234',
           });
           user.save();
         }

@@ -6,6 +6,11 @@ const Absence = require('../models/absence');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+  adminId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Admin',
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -33,8 +38,16 @@ const userSchema = new Schema({
   image: [{ type: String, required: true }],
   role: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
 });
 
 userSchema.methods.checkStatus = function (type, workplace) {
@@ -56,7 +69,7 @@ userSchema.methods.checkStatus = function (type, workplace) {
             _status.isWorking = true;
             return _status.save();
           })
-          .catch((err) => console.log(err)); 
+          .catch((err) => console.log(err));
 
       case 'checkOut':
         return this.checkOut(currAttendId, new Date())

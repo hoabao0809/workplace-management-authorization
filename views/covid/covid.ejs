@@ -31,6 +31,7 @@
             placeholder="37oC"
           />
         </div>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
         <button type="submit" class="btn btn-primary">Đăng ký</button>
       </form>
     </div>
@@ -49,6 +50,7 @@
             placeholder="Ngày dương tính"
           />
         </div>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
         <button type="submit" class="btn btn-primary">Đăng ký</button>
       </form>
     </div>
@@ -76,6 +78,7 @@
               <option value="Pfizer">Pfizer</option>
             </select>
         </div>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
         <input type="hidden" name="vaccineType1" value="1">
         <button type="submit">Đăng ký</button>
       </form>

@@ -1,17 +1,37 @@
-const { resolveInclude } = require('ejs');
+const User = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
-  console.log(req.session);
+  let errorMessage = req.flash('error');
+  if (errorMessage.length > 0) {
+    errorMessage = errorMessage[0];
+  } else {
+    errorMessage = null;
+  }
   res.render('auth/login', {
     pageTitle: 'Login',
     css: 'forms',
-    type: 'login'
+    type: 'login',
+    errorMessage,
   });
 };
 
 exports.postLogin = (req, res, next) => {
-  req.session.isLoggedIn = true;
-  res.redirect('/');
+  const { email, password } = req.body;
+
+  User.findOne({ email })
+    .then((user) => {
+      if (!user) {
+        req.flash('error', 'Invalid email or password');
+        return res.redirect('/login');
+      }
+      req.session.isLoggedIn = true;
+      req.session.user = user;
+      return req.session.save((err) => {
+        console.log(err);
+        res.redirect('/');
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 exports.postLogout = (req, res, next) => {
@@ -23,7 +43,7 @@ exports.postLogout = (req, res, next) => {
 
 exports.didLoggedIn = (req, res, next) => {
   if (!req.session.isLoggedIn) {
-    res.redirect('/login');
+    return res.redirect('/login');
   }
   next();
 };

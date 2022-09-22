@@ -11,15 +11,11 @@ exports.getHome = (req, res) => {
 
 // check whether user has checked in?
 exports.checkedIn = (req, res, next) => {
-  // User.findById('632ac97971a4e1ccad3b5c72')
-  User.findOne()
-    .then((user) => {
-      if (!user) {
-        next()
-      }
-      req.user = user;
-      return Status.findOne({ userId: user._id });
-    })
+  if (!req.user) {
+    return next();
+  }
+
+  Status.findOne({ userId: req.user._id })
     .then((result) => {
       if (!result) {
         const status = new Status({
@@ -42,26 +38,17 @@ exports.checkedIn = (req, res, next) => {
 };
 
 exports.getUserDetail = (req, res) => {
-  User.findById(req.user._id)
-    .then((user) => {
-      res.render('user/user-detail', {
-        pageTitle: 'Chi tiết nhân viên',
-        user,
-        css: 'user-detail',
-      });
-    })
-    .catch((err) => console.log(err));
+  return res.render('user/user-detail', {
+    pageTitle: 'Chi tiết nhân viên',
+    user: req.user,
+    css: 'user-detail',
+  });
 };
 
 exports.postUserDetail = (req, res) => {
-  const { id } = req.body;
-  User.findById(id)
-    .then((user) => {
-      user.image.unshift('/assets/images/avatars/' + req.file.filename);
-      user.save();
-      res.redirect('/user-detail');
-    })
-    .catch((err) => console.log(err));
+  req.user.image.unshift('/assets/images/avatars/' + req.file.filename);
+  req.user.save();
+  res.redirect('/user-detail');
 };
 
 exports.getStatistics = (req, res) => {

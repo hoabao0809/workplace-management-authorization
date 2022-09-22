@@ -26,7 +26,6 @@
       <form action="/user-detail" method="POST" enctype="multipart/form-data">
         <div class="imageUpload">
              <input type="file" class="form-control" name="image" id="imageUpload" >
-             <input type="hidden" name="id" value="<%= user._id %>">
         </div>
         <div class="saveImg">
             <button class="btn btn-primary" type="submit">Save</button>
@@ -58,6 +57,7 @@
                  <input type="hidden" name="id" value="<%= user._id %>">
             </div>
             <div class="saveImg">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
                 <button class="btn btn-primary" type="submit">Save</button>
                 <button class="btn btn-warning" type="button" id="cancel">Cancel</button>
             </div>

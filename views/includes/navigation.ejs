@@ -7,7 +7,10 @@
     </div>
     <div class="login">
       <% if(isAuthenticated) { %>
-        <a href="/logout">Logout</a>
+      <form action="/logout" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <button type="submit">Logout</button>
+      </form>
       <% } %>
     </div>
     <div class="nav-toggle">

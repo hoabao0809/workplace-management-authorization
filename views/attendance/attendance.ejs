@@ -18,6 +18,7 @@
         <% if (user.isWorking) { %>
           <label>Kết thúc công việc</label>
           <form action="/attendance?type=checkOut" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
             <input class="checkout" type="submit" value="Kết thúc" />
           </form>
         <% } else { %>
@@ -29,6 +30,7 @@
               <option value="Nhà">Nhà</option>
               <option value="Khách hàng">Khách hàng</option>
             </select>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
             <input class="checkout start" type="submit" value="Bắt đầu" />
           </form>
           <% } %>
