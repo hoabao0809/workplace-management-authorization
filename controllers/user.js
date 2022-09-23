@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Status = require('../models/status');
+const Admin = require('../models/admin');
 
 exports.getHome = (req, res) => {
   res.render('user/home', {
@@ -51,14 +52,37 @@ exports.postUserDetail = (req, res) => {
   res.redirect('/user-detail');
 };
 
-exports.getStatistics = (req, res) => {
-  req.user.getStatistics(null).then((statistics) => {
-    res.render('statistics/statistics', {
-      pageTitle: 'Tra cứu thông tin làm việc',
-      css: 'statistics',
-      user: req.user,
-      statistics,
-      type: 'details',
+exports.getStatistics = (req, res, next) => {
+  const page = +req.query.page || 1;
+  const itemsPerPage = +req.query.itemsPerPage || 3;
+
+  Admin.findOne({ _id: req.user.adminId }).then((admin) => {
+    if (!admin) {
+      admin = '';
+      next();
+    }
+
+    req.user.getStatistics(null).then((statistics) => {
+      let totalItems = statistics.length;
+      let currStatistics = statistics.splice(
+        (page - 1) * itemsPerPage,
+        itemsPerPage
+      );
+      res.render('statistics/statistics', {
+        pageTitle: 'Tra cứu thông tin làm việc',
+        css: 'statistics',
+        user: req.user,
+        statistics: currStatistics,
+        type: 'details',
+        admin,
+        currentPage: page,
+        itemsPerPage,
+        hasNextPage: itemsPerPage * page < totalItems,
+        hasPrevPage: page > 1,
+        nextPage: page + 1,
+        prevPage: page - 1,
+        lastPage: Math.ceil(totalItems / itemsPerPage),
+      });
     });
   });
 };

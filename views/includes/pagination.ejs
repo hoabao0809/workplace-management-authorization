@@ -1,0 +1,36 @@
+<div class="pagination-container">
+  <div class="pagination-pick">
+    <label for="pageLimit">Results per page: </label>
+    <select name="pageLimit" id="pageLimit">
+      <option value="3" <%= itemsPerPage == '3' ? 'selected' : ''%>>3</option>
+      <option value="5" <%= itemsPerPage == '5' ? 'selected' : ''%>>5</option>
+      <option value="7" <%= itemsPerPage == '7' ? 'selected' : ''%>>7</option>
+      <option value="10" <%= itemsPerPage == '10' ? 'selected' : ''%>>10</option>
+    </select>
+  </div>
+  <div class="pagination">
+    <% if (currentPage !== 1 && prevPage !== 1) { %>
+    <a href="/statistics/?page=1&itemsPerPage=<%= itemsPerPage %>">1</a>
+    <% } %> <% if (hasPrevPage) { %>
+    <a href="/statistics/?page=<%= prevPage %>&itemsPerPage=<%= itemsPerPage %>"
+      ><%= prevPage %></a
+    >
+    <% } %>
+
+    <a
+      href="/statistics/?page=<%= currentPage %>&itemsPerPage=<%= itemsPerPage %>"
+      class="active"
+      ><%= currentPage %></a
+    >
+
+    <% if (hasNextPage) { %>
+    <a href="/statistics/?page=<%= nextPage %>&itemsPerPage=<%= itemsPerPage %>"
+      ><%= nextPage %></a
+    >
+    <% } %> <% if (lastPage !== currentPage && nextPage !== lastPage ) { %>
+    <a href="/statistics/?page=<%= lastPage %>&itemsPerPage=<%= itemsPerPage %>"
+      ><%= lastPage %></a
+    >
+    <% } %>
+  </div>
+</div>

@@ -60,7 +60,6 @@ app.use((req, res, next) => {
       if (!user) {
         return next();
       }
-      console.log('user: ', user);
       req.user = user;
       next();
     })

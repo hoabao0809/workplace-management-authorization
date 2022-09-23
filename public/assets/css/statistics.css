@@ -46,6 +46,10 @@ input[type='submit']:hover {
   background-color: #3748e6f3;
 }
 
+.admin-info {
+  margin-top: 1rem;
+}
+
 .statistic-wrapper {
   padding: 0;
   width: 100%;
@@ -96,4 +100,31 @@ tr.total {
   td {
     padding: 10px 10px;
   }
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  column-gap: 2rem;
+  align-items: center;
+  margin-top: 2.5rem;
+}
+
+.pagination {
+  text-align: center;
+}
+
+.pagination a {
+  text-decoration: none;
+  color: #00695c;
+  padding: 0.5rem 1rem;
+  border: 1px solid #00695c;
+  margin: 0 1rem;
+}
+
+.pagination a:hover,
+.pagination a:active,
+.pagination a.active {
+  background: #00695c;
+  color: white;
 }

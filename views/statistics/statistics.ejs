@@ -18,7 +18,20 @@
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
             <input type="submit" value="Tìm">
         </form>
-    <em>(Tra cứu thông tin làm việc theo ngày, tháng, năm))</em>         
+
+        <form id="wildcard" action="" method="GET">
+            <label for="sort">Sắp xếp </label>
+                <select name="sort" id="sort">
+                    <option value="byDate">Theo ngày</option>
+                    <option value="byPlace">Theo nơi làm việc</option>
+                </select>
+        </form>
+
+        <em>(Tra cứu thông tin làm việc theo ngày, tháng, năm))</em>     
+        
+        <div class="admin-info">
+            <h3>Quản lý: <%= admin.name %> (ID: <%= admin._id %>)</h3>
+        </div>
 
     </div>
 
@@ -128,9 +141,9 @@
                 </tfoot>
             </table>
 
-        <%} %>
-    </div>
-  
 
+        <%- include('../includes/pagination.ejs', {currentPage, hasNextPage, hasPrevPage, nextPage, prevPage, lastPage, itemsPerPage}) %><%} %>
+    </div>
 </div>
 
+<%- include('../includes/footer.ejs') %>
