@@ -55,25 +55,25 @@ exports.postUserDetail = (req, res) => {
 exports.getStatistics = (req, res, next) => {
   const page = +req.query.page || 1;
   const itemsPerPage = +req.query.itemsPerPage || 3;
-
+  let admin;
   Admin.findOne({ _id: req.user.adminId }).then((admin) => {
     if (!admin) {
-      admin = '';
       next();
     }
 
     req.user.getStatistics(null).then((statistics) => {
-      let totalItems = statistics.length;
-      let currStatistics = statistics.splice(
+      const totalItems = statistics.length;
+      const currStatistics = statistics.splice(
         (page - 1) * itemsPerPage,
         itemsPerPage
       );
+
       res.render('statistics/statistics', {
         pageTitle: 'Tra cứu thông tin làm việc',
+        type: 'details',
         css: 'statistics',
         user: req.user,
         statistics: currStatistics,
-        type: 'details',
         admin,
         currentPage: page,
         itemsPerPage,
@@ -88,15 +88,27 @@ exports.getStatistics = (req, res, next) => {
 };
 
 exports.setStatisticSearch = (req, res) => {
+  let admin;
   const { type, search } = req.query;
-  req.user.getStatistics({ type, search }).then((statistics) => {
-    res.render('statistics/statistics', {
-      pageTitle: 'Tìm kiếm thông tin',
-      css: 'statistics',
-      user: req.user,
-      statistics,
-      type,
-      month: search,
+
+  Admin.findOne({ _id: req.user.adminId }).then((admin) => {
+    if (!admin) {
+      next();
+    }
+
+    req.user.getStatistics({ type, search }).then((statistics) => {
+      res.render('statistics/statistics', {
+        pageTitle: 'Tìm kiếm thông tin', //note
+        type, //note
+        month: search, //note
+
+        css: 'statistics',
+        user: req.user,
+        css: 'statistics',
+        user: req.user,
+        statistics,
+        admin,
+      });
     });
   });
 };

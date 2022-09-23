@@ -128,3 +128,7 @@ tr.total {
   background: #00695c;
   color: white;
 }
+
+select {
+  padding: 0.5rem;
+}

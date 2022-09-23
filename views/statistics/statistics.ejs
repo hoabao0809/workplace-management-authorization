@@ -141,9 +141,10 @@
                 </tfoot>
             </table>
 
-
-        <%- include('../includes/pagination.ejs', {currentPage, hasNextPage, hasPrevPage, nextPage, prevPage, lastPage, itemsPerPage}) %><%} %>
-    </div>
+        <% if ( type === 'details') { %>
+            <%- include('../includes/pagination.ejs', {currentPage, hasNextPage, hasPrevPage, nextPage, prevPage, lastPage, itemsPerPage}) %><%} %>
+        <% } %>    
+        </div>
 </div>
 
 <%- include('../includes/footer.ejs') %>
