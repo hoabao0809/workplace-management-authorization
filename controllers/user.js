@@ -3,8 +3,6 @@ const Status = require('../models/status');
 const Admin = require('../models/admin');
 
 exports.getHome = (req, res) => {
-  console.log(req)
-
   res.render('user/home', {
     pageTitle: 'Trang chủ',
     user: req.user,

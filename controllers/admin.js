@@ -1,6 +1,7 @@
 const Admin = require('../models/admin');
 
 exports.checkAuthorized = (req, res, next) => {
+  console.log('USERRR', req.session.user);
   Admin.findOne({ email: req.session.user.email })
     .then((admin) => {
       if (!admin) {
@@ -9,7 +10,6 @@ exports.checkAuthorized = (req, res, next) => {
       }
       req.session.admin = admin;
       req.session.save((err) => {
-        console.log(err);
         return next();
       });
     })
@@ -62,7 +62,7 @@ exports.postLogin = (req, res, next) => {
       });
     })
     .then((result) => {
-      res.redirect('/admin/covid-details');
+      res.redirect('/admin/covid-details/?action=view');
     })
     .catch((err) => {
       console.log(err);

@@ -18,3 +18,13 @@ td {
   border-radius: 10px;
   box-shadow: 0 1px 2px #00000033;
 }
+
+.download {
+  text-align: right;
+  margin: 1rem 0.75rem 0.5rem;
+}
+
+.fa-download {
+  margin-right: .5rem;
+  
+}

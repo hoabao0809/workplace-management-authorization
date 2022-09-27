@@ -4,14 +4,17 @@
 
 <body>
     <%- include('../includes/navigation.ejs') %>
-    <div class="">
+    <div class="attendance-content" id="staffs-covid">
+<strong><h3>Danh sách nhân viên và thông tin về COVID-19</h3></strong>
+
+
     <table>
         <thead>
             <tr>
                 <th>Tên</th>
                 <th>Nhiệt độ cơ thể</th>
-                <th>Dương tính COVID-19</th>
                 <th>Tiêm vaccine</th>
+                <th>Dương tính COVID-19</th>
             </tr>
         </thead>
 
@@ -35,11 +38,20 @@
                             <% }) %>
                         </td>
                     </tr>
-                    <% }) %>
+                    <% }) %>     
+            <div class="download">
+                <form action="/admin/covid-details?action=download" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+
+                    <input type="submit" class="fa fa-download" value="Download" />
+                 </form>
+            </div>    
+
             <% } else { %>      
                 <h1>Không có dữ liệu</h1>
-            <% } %>      
-        </tbody>
+            <% } %>     
+        </tbody>     
+
     </table>
 
  

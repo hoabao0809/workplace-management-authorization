@@ -9,7 +9,11 @@
   <div class="covid-title">
       <h3><%= user.name %></h3>
       <a href="/covid-details">Thông tin cá nhân</a>
-      <a href="/admin/covid-details">Thông tin các nhân viên</a>
+      <form action="/admin/covid-details?action=view" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+
+        <input type="submit" class="fa fa-download" value="Thông tin các nhân viên" />
+     </form>
   </div>
 
   <div class="covid-vaccine">

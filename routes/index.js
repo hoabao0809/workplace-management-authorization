@@ -87,4 +87,7 @@ router.get(
 );
 router.post('/covid', authController.didLoggedIn, covidController.postCovid);
 
+
+
+
 module.exports = router;
