@@ -7,6 +7,7 @@ dotenv.config();
 const dbConnect = require('./util/database');
 const userRoutes = require('./routes/index');
 const authRoutes = require('./routes/auth');
+const adminRouter = require('./routes/admin');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
@@ -73,6 +74,7 @@ app.use(userController.checkedIn);
 // Routes
 app.use(userRoutes);
 app.use(authRoutes);
+app.use(adminRouter);
 
 // Connect to mongoDb
 dbConnect()

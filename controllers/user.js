@@ -3,6 +3,8 @@ const Status = require('../models/status');
 const Admin = require('../models/admin');
 
 exports.getHome = (req, res) => {
+  console.log(req)
+
   res.render('user/home', {
     pageTitle: 'Trang chủ',
     user: req.user,
@@ -56,6 +58,7 @@ exports.getStatistics = (req, res, next) => {
   const page = +req.query.page || 1;
   const itemsPerPage = +req.query.itemsPerPage || 3;
   let admin;
+  
   Admin.findOne({ _id: req.user.adminId }).then((admin) => {
     if (!admin) {
       next();
@@ -102,8 +105,6 @@ exports.setStatisticSearch = (req, res) => {
         type, //note
         month: search, //note
 
-        css: 'statistics',
-        user: req.user,
         css: 'statistics',
         user: req.user,
         statistics,

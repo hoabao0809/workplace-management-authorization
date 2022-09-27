@@ -1,14 +1,12 @@
 window.onload = function () {
   // Navbar toggle
   document.querySelector('.fa-bars').addEventListener('click', () => {
-    // document.querySelector('.navigation').style.right = '0';
     document.querySelector('.navigation').style.opacity = '1';
     document.querySelector('.navigation').style.clipPath =
       'polygon(0 100%, 100% 100%, 100% 0, 0 0)';
   });
 
   document.querySelector('.fa-times').addEventListener('click', () => {
-    // document.querySelector('.navigation').style.right = '-100%';
     document.querySelector('.navigation').style.opacity = '0';
     document.querySelector('.navigation').style.clipPath =
       'polygon(100% 100%, 100% 100%, 100% 0, 100% 0)';

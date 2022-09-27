@@ -236,4 +236,5 @@ userSchema.methods.renderStatistics = function (arg) {
     .catch((err) => console.log(err));
 };
 
+
 module.exports = mongoose.model('User', userSchema);

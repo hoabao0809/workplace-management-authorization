@@ -13,7 +13,11 @@
         <% } %>
 
         <div class="login-container">
+            <% if (role === 'admin') { %>
+            <form class="login-form" action="/admin/login" method="POST">
+            <% } else { %>     
             <form class="login-form" action="/login" method="POST">
+            <% } %>     
                 <div class="form-group">
                     <label for="email">E-Mail</label>
                     <input type="email" class="form-control" name="email" id="email">

@@ -7,6 +7,10 @@ const covidSchema = new Schema({
     ref: 'User',
     required: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
   bodyTemps: [
     {
       date: {

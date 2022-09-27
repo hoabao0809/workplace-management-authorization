@@ -12,14 +12,14 @@ exports.getLogin = (req, res, next) => {
     css: 'forms',
     type: 'login',
     errorMessage,
+    role: 'staff',
   });
 };
 
 exports.postLogin = (req, res, next) => {
   const { email, password } = req.body;
-  console.log(email, password);
 
-  User.findOne({ email })
+  User.findOne({ email, password })
     .then((user) => {
       if (!user) {
         req.flash('error', 'Invalid email or password');
@@ -43,6 +43,7 @@ exports.postLogout = (req, res, next) => {
 };
 
 exports.didLoggedIn = (req, res, next) => {
+
   if (!req.session.isLoggedIn) {
     return res.redirect('/login');
   }

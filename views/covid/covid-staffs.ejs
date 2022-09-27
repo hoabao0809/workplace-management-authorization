@@ -1,0 +1,48 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/assets/css/<%= css %>.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <div class="">
+    <table>
+        <thead>
+            <tr>
+                <th>Tên</th>
+                <th>Nhiệt độ cơ thể</th>
+                <th>Dương tính COVID-19</th>
+                <th>Tiêm vaccine</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% if (userArr.length > 0) { %>
+                <% userArr.map(user => { %>
+                    <tr>
+                        <td><%= user.name %></td>
+                        <td><% user.bodyTemps.map(temp => {  %>
+                            <p><span>- <%= temp.temperature %></span>
+                            <span>(<%= temp.date.toLocaleDateString() %>)</span></p>
+                            <% }) %>
+                        </td>
+                        <td><% user.vaccine.map(item => {  %>
+                            <p><span>- <%= item.name %></span>
+                            <span>(<%= item.date.toLocaleDateString() %>)</span></p>
+                            <% }) %>
+                        </td>
+                        <td><% user.positive.map(item => {  %>
+                            <p>- <%= item.date.toLocaleDateString() %></p>
+                            <% }) %>
+                        </td>
+                    </tr>
+                    <% }) %>
+            <% } else { %>      
+                <h1>Không có dữ liệu</h1>
+            <% } %>      
+        </tbody>
+    </table>
+
+ 
+
+    </div>
+<%- include('../includes/footer.ejs') %>
