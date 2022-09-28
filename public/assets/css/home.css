@@ -53,6 +53,12 @@
   margin-bottom: 1rem;
 }
 
+.attendance-img {
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 .card .details__item {
   display: flex;
   justify-content: space-between;
@@ -129,7 +135,8 @@
 
 /* Attendance */
 .attendance .card-img {
-  width: 50% !important;
+  width: 13rem;
+  height: 13rem;
   margin: 0 auto;
   border-radius: 50%;
 }

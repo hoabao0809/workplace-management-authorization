@@ -92,6 +92,20 @@ userSchema.methods.checkIn = function (attendId, startTime, workplace) {
 
   if (attendId) {
     return Attendance.findById(attendId).then((attendance) => {
+      if (!attendance) {
+        const newAttend = new Attendance({
+          userId: this._id,
+          date,
+          details: [
+            {
+              startTime,
+              endTime: null,
+              workplace,
+            },
+          ],
+        });
+        return newAttend.save();
+      }
       // Check if user has not checked out
       if (date === attendance.date) {
         attendance.details.unshift({
@@ -209,6 +223,7 @@ userSchema.methods.renderStatistics = function (arg) {
           overTime: attendance.overTime,
           underTime: attendance.underTime,
           salary: attendance.salary,
+          confirmed: attendance.confirmed,
         });
       });
 
@@ -235,6 +250,5 @@ userSchema.methods.renderStatistics = function (arg) {
     })
     .catch((err) => console.log(err));
 };
-
 
 module.exports = mongoose.model('User', userSchema);

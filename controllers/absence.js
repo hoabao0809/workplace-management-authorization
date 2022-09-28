@@ -44,7 +44,7 @@ exports.postAbsence = (req, res, next) => {
       );
     })
     .then((result) => {
-      res.redirect('absence/absence');
+      res.redirect('/absence');
     })
     .catch((err) => console.log(err));
 };

@@ -1,13 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-const ejs = require('ejs');
 const pdf = require('pdf-creator-node');
 
 const Covid = require('../models/covid');
-const Admin = require('../models/admin');
 const User = require('../models/user');
 
-// const adminController = require('../models/admin');
+const options = require('../helpers/options');
 
 exports.getCovid = (req, res) => {
   Covid.findOne({ userId: req.user._id })
@@ -117,7 +115,7 @@ exports.getStaffsCovid = (req, res, next) => {
                 'covid/covid-staffs',
                 {
                   pageTitle: 'Thông tin COVID-19 nhân viên',
-                  css: 'attendance-details',
+                  css: 'covid-download',
                   userArr,
                 },
                 (err, html) => {
@@ -125,24 +123,6 @@ exports.getStaffsCovid = (req, res, next) => {
                     console.log(err);
                   }
                   const filename = 'report.pdf';
-                  var options = {
-                    format: 'A4',
-                    orientation: 'portrait',
-                    border: '10mm',
-                    header: {
-                      height: '45mm',
-                    },
-                    footer: {
-                      height: '28mm',
-                      contents: {
-                        first: 'Cover page',
-                        2: 'Second page', // Any page number is working. 1-based index
-                        default:
-                          '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
-                        last: 'Last Page',
-                      },
-                    },
-                  };
 
                   const document = {
                     html,
@@ -162,94 +142,9 @@ exports.getStaffsCovid = (req, res, next) => {
                     .catch((err) => console.log(err));
                 }
               );
-
-            // ejs.renderFile(
-            //   path.join(
-            //     __dirname,
-            //     '..',
-            //     'views',
-            //     'covid',
-            //     'covid-staffs.ejs'
-            //   ),
-            //   {
-            //     pageTitle: 'Thông tin COVID-19 nhân viên',
-            //     css: 'attendance-details',
-            //     userArr,
-            //   },
-            //   (err, string) => {
-            //     if (err) return res.send(err);
-            //     pdf.create(str).toFile('report.pdf', function (err, data) {
-            //       if (err) {
-            //         console.log('ERRRRR');
-            //         // return res.send(err);
-            //       }
-
-            //       res.send('File created successfully');
-            //     });
-            //   }
-            // );
-
-            // const html = fs.readFileSync(
-            //   path.join(__dirname, '../views/covid/covid-staffs.ejs'),
-            //   'utf-8'
-            // );
-            // const filename = 'report.pdf';
-
-            // const document = {
-            //   html,
-            //   data: userArr,
-            //   path: './docs/' + filename,
-            // };
-
-            // pdf
-            //   .create(document)
-            //   .then((result) => {
-            //     const listPath = path.join('docs', filename);
-            //     const file = fs.createReadStream(listPath);
-            //     res.setHeader('Content-Type', 'application/pdf');
-            //     res.setHeader('Content-Disposition', 'inline');
-            //     file.pipe(res);
-            //   })
-            //   .catch((err) => console.log(err));
           }
         }
       });
     })
     .catch((err) => console.log(err));
 };
-
-// exports.getDownload = (req, res, next) => {
-// const adminId = req.params.adminId;
-// const listName = 'list-' + adminId + '.pdf';
-// const listPath = path.join('data', 'listStaffCovid', listName);
-
-// fs.readFile(listPath, (err, data) => {
-//   if (err) {
-//     return console.log(err);
-//   }
-//   res.setHeader('Content-Type', 'application/pdf');
-//   res.setHeader('Content-Disposition', 'inline; filename="' + listName + '"');
-//   res.send(data);
-// });
-
-// const file = fs.createReadStream(listPath);
-// res.setHeader('Content-Type', 'application/pdf');
-// res.setHeader('Content-Disposition', 'inline; filename="' + listName + '"');
-// file.pipe(res);
-
-// ejs.renderFile(
-//   path.join(__dirname, '..', 'views', 'covid', 'covid-staffs.ejs'),
-//   (err, str) => {
-//     if (err) {
-//       console.log(err);
-//     }
-
-// pdf.create(str).toFile('list-staffs.pdf', (err, data) => {
-//   if (err) {
-//     console.log(err);
-//   }
-//   console.log('file created');
-// });
-//     }
-//   );
-// };

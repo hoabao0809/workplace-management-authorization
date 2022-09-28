@@ -18,6 +18,10 @@ const attendanceSchema = new Schema({
       workplace: { type: String, required: true },
     },
   ],
+  confirmed: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model('Attendance', attendanceSchema);

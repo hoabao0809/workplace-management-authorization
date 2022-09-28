@@ -1,7 +1,9 @@
 const Admin = require('../models/admin');
+const Attendance = require('../models/attendance');
+const user = require('../models/user');
+const User = require('../models/user');
 
 exports.checkAuthorized = (req, res, next) => {
-  console.log('USERRR', req.session.user);
   Admin.findOne({ email: req.session.user.email })
     .then((admin) => {
       if (!admin) {
@@ -67,4 +69,65 @@ exports.postLogin = (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
+};
+
+exports.confirmStatistics = (req, res, next) => {
+  return User.find({ adminId: req.session.admin._id })
+    .exec()
+    .then((users) => {
+      return res.render('statistics/statistics-confirm', {
+        pageTitle: 'Xác nhận dữ liệu giờ làm',
+        css: 'attendance-details',
+        users,
+      });
+    });
+};
+
+exports.getStatisticsByUser = (req, res, next) => {
+  const userId = req.params.userId;
+  const { search } = req.query;
+  const type = 'monthSalary';
+  const currentMonth = new Date().getMonth() + 1;
+
+  if (req.query.dateDeleted) {
+    const dateDeleted = new Date(req.query.dateDeleted).toLocaleDateString();
+    Attendance.deleteOne({ date: dateDeleted })
+      .then((result) => console.log(result))
+      .catch((err) => console.log(err));
+  }
+
+  return User.findOne({ _id: userId }).then((user) => {
+    user
+      .getStatistics({ type, search: search || currentMonth })
+      .then((statistics) => {
+        res.render('statistics/statistics-byuser', {
+          pageTitle: 'Tìm kiếm thông tin', //note
+          type, //note
+          month: search || currentMonth, //note
+
+          css: 'statistics',
+          user: req.user,
+          statistics,
+          userId,
+          user,
+        });
+      });
+  });
+};
+
+exports.postConfirmStatistics = async (req, res, next) => {
+  const userId = req.params.userId;
+  const { monthConfirmed } = req.body;
+
+  const result = await Attendance.updateMany(
+    {
+      userId,
+      date: { $regex: `^${monthConfirmed}/` },
+    },
+    { confirmed: true }
+  );
+
+  if (result.acknowledged) {
+    res.redirect('/');
+  }
 };

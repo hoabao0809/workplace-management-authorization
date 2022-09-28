@@ -8,23 +8,20 @@
 <div class="statistic-content">
     <div class="wildcard-container">
      
-        <form id="wildcard" action="/statistic-search" method="GET">
-            <label for="date">Tra cứu </label>
-                <select name="type" id="category">
-                    <option value="jobDetail">thông tin giờ làm</option>
-                    <option value="monthSalary">lương tháng</option>
-                </select>
+        <form id="wildcard" action="/admin/statistics-confirm/<%= userId %>" method="GET">
+            <label for="date">Tra cứu theo tháng</label>
+               
             <input type="text" name="search" id="search">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
             <input type="submit" value="Tìm">
         </form>
-
-        <em>(Tra cứu thông tin làm việc theo ngày, tháng, năm))</em>     
-        
-        <div class="admin-info">
-            <h3>Quản lý: <%= admin.name %> (ID: <%= admin._id %>)</h3>
-        </div>
-
+    </div>
+    <div class="">
+        <form action="/admin/confirm-statisticsbymonth/<%= userId %>" method="POST">
+            <p>Nhân viên: <strong><%= user.name.toUpperCase() %> - <button class="btn btn-primary" type="submit">Xác nhận tháng <%= month %></button></strong></p>
+            <input type="hidden" name="monthConfirmed" value="<%= month %>">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
+        </form>
     </div>
 
     <div class="statistic-wrapper">
@@ -41,6 +38,7 @@
                         <th>Giờ kết thúc</th>
                         <th>Thời gian làm việc</th>
                         <th>Lương ngày</th>   
+                        <th><i class="fa fa-cogs"></i></th>   
                     </tr>
                 </thead>
 
@@ -58,7 +56,22 @@
                                     <td><%= item.details[0].endTime.toLocaleTimeString() %></td>
                                     <td><%= ((item.details[0].endTime - item.details[0].startTime)/(3600 * 1000)).toFixed(1) %></td>
                                     <td rowspan="<%= item.details.length + 1 %>"><%= item.salary.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></td>
+                                    <td rowspan="<%= item.details.length + 1 %>">
+                                        <form action="/admin/statistics-confirm/<%= userId %>">
+                                            <% if (item.confirmed) { %>
+                                            <button type="submit" class="btn btn-secondary" disabled><i class="fa fa-trash-alt"></i>
+                                            </button>
+                                            <% } else { %>
+                                                <button type="submit" class="btn btn-secondary">
+                                                <i class="fa fa-trash-alt"></i>
+                                            </button>
+                                            <% } %>
+                                            <input type="hidden" name="dateDeleted" value="<%= item.details[0].startTime %>"/>
+                                        </form>    
+                                    </td>
+
                                 <% }else { %>
+                                    <td>--</td>
                                     <td>--</td>
                                     <td>--</td>
                                 <%} %>
@@ -77,6 +90,7 @@
                                         <% }else { %>
                                             <td>--</td>
                                             <td>--</td>
+
                                         <%} %>
                                     </tr>
                                 <% } %>
@@ -101,10 +115,27 @@
                                     <td><%= item.details[0].endTime.toLocaleTimeString() %></td>
                                     <td><%= ((item.details[0].endTime - item.details[0].startTime)/(3600 * 1000)).toFixed(1) %></td>
                                     <td rowspan="<%= item.details.length + 1 %>"><%= item.salary.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></td>
+                                    
+                                    <td rowspan="<%= item.details.length + 1 %>">
+                                        <form action="/admin/statistics-confirm/<%= userId %>">
+                                            <% if (item.confirmed) { %>
+                                                <button type="submit" class="btn btn-secondary" disabled><i class="fa fa-trash-alt"></i>
+                                                </button>
+                                                <% } else { %>
+                                                    <button type="submit" class="btn btn-secondary">
+                                                    <i class="fa fa-trash-alt"></i>
+                                                </button>
+                                                <% } %>
+                                            <input type="hidden" name="dateDeleted" value="<%= item.details[0].startTime %>" />
+                                        </form>    
+                                    </td>
+
                                 <% }else { %>
                                     <td>--</td>
                                     <td>--</td>
                                     <td rowspan="2">--</td>
+                                    <td rowspan="2">--</td>
+
                                 <%} %>
                             </tr>
                             <% if(item.details[0].endTime){ %>
@@ -121,6 +152,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
                             </tr>
                         <% } %> 
                     <% }) %>
@@ -128,7 +160,7 @@
 
                 <tfoot>
                     <% if (type === 'monthSalary') { %>
-                        <th style="background:#55555578;" colspan="6">Lương tháng <%= month %>: <%= statistics.monthSalary.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %> </th>
+                        <th style="background:#55555578;" colspan="7">Lương tháng <%= month %>: <%= statistics.monthSalary.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %> </th>
                     <% } %> 
                 </tfoot>
             </table>
