@@ -140,10 +140,6 @@ footer {
   .navigation {
     width: 50%;
   }
-
-  .navigation li:last-child {
-    display: none;
-  }
 }
 
 @media screen and (min-width: 992px) {
@@ -170,5 +166,9 @@ footer {
 
   .nav-link h4 {
     font-size: 1.5rem;
+  }
+
+  .navigation li:last-child {
+    display: none;
   }
 }

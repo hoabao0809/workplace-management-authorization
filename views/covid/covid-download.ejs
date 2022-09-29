@@ -1,13 +1,47 @@
 <%- include('../includes/head.ejs') %>
-<link rel="stylesheet" href="/assets/css/<%= css %>.css">
+
+<style>
+    table,
+    tr,
+    th,
+    td {
+    border: 1px solid black;
+    padding: 0.75rem;
+    font-size: 1.25rem;
+    margin: 1rem 0.75rem;
+    }
+
+    table {
+        margin: 2rem auto;
+    }
+
+    .attendance-content {
+    margin: auto;
+    background: #fff;
+    margin: 2rem auto;
+    padding: 1rem 0.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px #00000033;
+    }
+
+    .download {
+    text-align: right;
+    margin: 1rem 0.75rem 0.5rem;
+    }
+
+    .fa-download {
+    margin-right: 0.5rem;
+    }
+</style>
 </head>
 
 <body>
-    <%- include('../includes/navigation.ejs') %>
     <div class="attendance-content" id="staffs-covid">
+    
 <strong><h3>Danh sách nhân viên và thông tin về COVID-19</h3></strong>
-
-
     <table>
         <thead>
             <tr>
@@ -39,14 +73,6 @@
                         </td>
                     </tr>
                     <% }) %>     
-            <div class="download">
-                <form action="/admin/covid-details?action=download" method="POST">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
-
-                    <button type="submit" class="btn btn-info fa fa-download" />
-                 </form>
-            </div>    
-
             <% } else { %>      
                 <h1>Không có dữ liệu</h1>
             <% } %>     

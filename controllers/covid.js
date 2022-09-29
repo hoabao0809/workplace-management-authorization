@@ -112,10 +112,9 @@ exports.getStaffsCovid = (req, res, next) => {
 
             case 'download':
               return res.render(
-                'covid/covid-staffs',
+                'covid/covid-download',
                 {
                   pageTitle: 'Thông tin COVID-19 nhân viên',
-                  css: 'covid-download',
                   userArr,
                 },
                 (err, html) => {
