@@ -19,7 +19,7 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background:#73707035;
+  background: #73707035;
 }
 
 /* Handle on hover */
@@ -62,7 +62,10 @@ section {
 
 .logo {
   font-size: 1rem;
-  object-fit: 100%;
+}
+
+nav .login {
+  display: none;
 }
 
 .page-content {
@@ -101,7 +104,6 @@ section {
   cursor: pointer;
 }
 
-
 .nav-item {
   font-size: 1.2rem;
   transition: all 300ms ease;
@@ -138,6 +140,10 @@ footer {
   .navigation {
     width: 50%;
   }
+
+  .navigation li:last-child {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 992px) {
@@ -148,6 +154,10 @@ footer {
     box-shadow: none;
     opacity: 1;
     clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 0);
+  }
+
+  nav .login {
+    display: block;
   }
 
   .nav-toggle {

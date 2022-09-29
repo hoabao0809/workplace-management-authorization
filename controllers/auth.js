@@ -29,7 +29,8 @@ exports.postLogin = (req, res, next) => {
       req.session.user = user;
       return req.session.save((err) => {
         console.log(err);
-        res.redirect('/');
+        res.redirect(req.session.returnTo || '/');
+        delete req.session.returnTo;
       });
     })
     .catch((err) => console.log(err));
@@ -43,8 +44,8 @@ exports.postLogout = (req, res, next) => {
 };
 
 exports.didLoggedIn = (req, res, next) => {
-
   if (!req.session.isLoggedIn) {
+    req.session.returnTo = req.originalUrl;
     return res.redirect('/login');
   }
   next();

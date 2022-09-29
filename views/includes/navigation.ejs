@@ -2,14 +2,16 @@
   <div class="container">
     <div class="nav-brand">
       <a href="/">
-        <img class="logo" src="assets/images/logo.png" alt="" />
+        <img class="logo" src="/assets/images/logo.png" alt="" />
       </a>
     </div>
     <div class="login">
       <% if(isAuthenticated) { %>
       <form action="/logout" method="post">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-        <button type="submit">Logout</button>
+        <button class="btn btn-info" type="submit">
+          <i class="fa fa-sign-out-alt"></i> Logout
+        </button>
       </form>
       <% } %>
     </div>
@@ -58,6 +60,17 @@
             <h4>Xác nhận dữ liệu giờ làm</h4>
           </a>
         </li>
+
+        <% if(isAuthenticated) { %>
+        <li class="nav-item">
+          <form class="nav-link" action="/logout" method="post">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+            <button class="btn btn-info" type="submit">
+              <i class="fa fa-sign-out-alt"></i> Logout
+            </button>
+          </form>
+        </li>
+        <% } %>
       </ul>
     </div>
 
