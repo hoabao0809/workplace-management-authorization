@@ -10,7 +10,7 @@
 }
 
 .covid-title {
-  padding: 2rem;
+  padding: 2rem 2rem 3rem;
   text-align: center;
   background: #d0bbe5;
   border-radius: 10px 10px 0 0;
@@ -71,6 +71,11 @@ h3 {
 }
 
 .covid-wrapper .form-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.covid-btn {
   display: flex;
   justify-content: space-between;
 }

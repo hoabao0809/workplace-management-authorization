@@ -4,7 +4,7 @@ const covidController = require('../controllers/covid');
 const adminController = require('../controllers/admin');
 const authController = require('../controllers/auth');
 
-adminRouter.post(
+adminRouter.get(
   '/admin/covid-details',
   adminController.checkAuthorized,
   covidController.getStaffsCovid

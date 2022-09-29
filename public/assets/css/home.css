@@ -135,8 +135,8 @@
 
 /* Attendance */
 .attendance .card-img {
-  width: 13rem;
-  height: 13rem;
+  width: 8rem;
+  height: 8rem;
   margin: 0 auto;
   border-radius: 50%;
 }
@@ -161,7 +161,7 @@
 .attendance select {
   font-size: 1.25rem;
   padding: 0.25rem;
-  margin-bottom: 1.5rem;
+
 }
 
 .status.online {
@@ -219,4 +219,16 @@
   .offduty {
     margin-top: 1rem;
   }
+
+  .attendance select {
+
+    margin-bottom: 1.5rem;
+  }
+
+  .attendance .card-img {
+    width: 13rem;
+    height: 13rem;
+   
+  }
+  
 }

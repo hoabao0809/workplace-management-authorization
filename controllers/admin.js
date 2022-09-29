@@ -7,10 +7,21 @@ exports.checkAuthorized = (req, res, next) => {
   Admin.findOne({ email: req.session.user.email })
     .then((admin) => {
       if (!admin) {
-        req.flash('error', 'Unauthorized! Please login again.');
-        return res.redirect('/admin/login');
+        // Check logged-in user's email matches admin's email
+        if (!req.session.admin) {
+          req.flash('error', 'Unauthorized! Please login again.');
+          return res.redirect('/admin/login');
+        } else if (req.session.admin.email !== req.session.user.email) {
+          req.flash(
+            'error',
+            'Unauthorized! You are not allowed to access this section'
+          );
+          return res.redirect('/admin/login');
+        }
       }
+
       req.session.admin = admin;
+
       req.session.save((err) => {
         return next();
       });
@@ -59,12 +70,10 @@ exports.postLogin = (req, res, next) => {
       }
       req.session.admin = admin;
 
-      return req.session.save((err) => {
-        console.log(err);
-      });
+      return req.session.save();
     })
     .then((result) => {
-      res.redirect('/admin/covid-details/?action=view');
+      res.redirect('/admin/covid-details?action=view');
     })
     .catch((err) => {
       console.log(err);
