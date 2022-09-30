@@ -13,7 +13,6 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
 
-
 const User = require('./models/user');
 
 const userController = require('./controllers/user');
@@ -96,8 +95,9 @@ dbConnect()
           });
           user.save();
         }
-        app.listen(3001);
-        console.log('Connected');
+        app.listen(process.env.PORT || 8000, '0.0.0.0', () => {
+          console.log('Connected');
+        });
       })
       .catch((err) => console.log(err));
   })
