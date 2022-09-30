@@ -128,7 +128,11 @@ exports.getStaffsCovid = (req, res, next) => {
                   };
 
                   pdf
-                    .create(document, options)
+                    .create(document, {
+                      childProcessOptions: {
+                        env: { OPENSSL_CONF: '/dev/null' },
+                      },
+                    })
                     .then((result) => {
                       const listPath = path.join('docs', filename);
                       const file = fs.createReadStream(listPath);
