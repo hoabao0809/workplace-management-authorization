@@ -130,6 +130,15 @@ exports.getStaffsCovid = (req, res, next) => {
                   pdf
                     .create(document, {
                       childProcessOptions: {
+                        format: 'A4',
+                        orientation: 'portrait',
+                        border: '10mm',
+                        header: {
+                          height: '45mm',
+                        },
+                        footer: {
+                          height: '28mm',
+                        },
                         env: { OPENSSL_CONF: '/dev/null' },
                       },
                     })
