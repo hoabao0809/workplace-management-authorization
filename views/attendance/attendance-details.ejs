@@ -6,7 +6,7 @@
 <%- include('../includes/navigation.ejs') %>
 
 <div class="attendance-content">
-        <strong><h2>Ngày làm việc: <%= attendance.date %></h2></strong>
+        <strong><h2>Ngày làm việc: <%= attendance?.date %></h2></strong>
         
         <table>
             <thead>
@@ -19,7 +19,7 @@
             </thead>
 
             <tbody>
-            <% if (attendance.details.length > 0) {
+            <% if (attendance?.details.length > 0) {
                 attendance.details.map(detail => {
                 %>
             <tr>
@@ -35,7 +35,7 @@
             </tr>
             <% })} %>
             
-            <% if(attendance.details[0].endTime){ %>
+            <% if(attendance?.details[0].endTime){ %>
                 <tr class="total">
                     <% const totalTime = attendance.details.reduce((total, detail) => {return total + ((detail.endTime - detail.startTime))/(3600 *1000)},0) %>
                     <td colspan="4">Tổng thời gian làm việc: <%= totalTime.toFixed(1) %></td>

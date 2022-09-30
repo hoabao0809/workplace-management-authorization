@@ -15,7 +15,6 @@ const flash = require('connect-flash');
 
 
 const User = require('./models/user');
-const Admin = require('./models/admin');
 
 const userController = require('./controllers/user');
 
@@ -91,7 +90,7 @@ dbConnect()
             department: 'IT',
             annualLeave: 13,
             image: ['/assets/images/avatars/avatar.png'],
-            role: 'staff',
+            role: 'admin',
             email: 'abcd1234@gmail.com',
             password: 'abcd1234',
           });
