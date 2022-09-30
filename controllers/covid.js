@@ -130,7 +130,7 @@ exports.getStaffsCovid = (req, res, next) => {
                   pdf
                     .create(document, {
                       format: 'A4',
-                      orientation: 'portrait',
+                      orientation: 'landscape',
                       border: '10mm',
                       header: {
                         height: '45mm',
