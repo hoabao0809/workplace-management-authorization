@@ -1,6 +1,5 @@
 const Admin = require('../models/admin');
 const Attendance = require('../models/attendance');
-const user = require('../models/user');
 const User = require('../models/user');
 
 exports.checkAuthorized = (req, res, next) => {

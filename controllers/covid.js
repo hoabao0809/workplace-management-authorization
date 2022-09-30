@@ -38,7 +38,6 @@ exports.postCovid = (req, res, next) => {
   const name = req.session.user.name;
   Covid.findOne({ userId: req.user._id })
     .then((covid) => {
-      // Check type of covid-form (temperature, vaccine, positive)
       if (type === 'temperature') {
         covid.bodyTemps.push({
           date: new Date(),
@@ -61,10 +60,8 @@ exports.postCovid = (req, res, next) => {
 
 // Get Covid Details Page
 exports.getCovidDetails = (req, res, next) => {
-  // Get Covid Details by User
   Covid.findOne({ userId: req.user._id })
     .then((covid) => {
-      // Check if user has no covid data
       if (covid) {
         return covid;
       } else {
@@ -102,6 +99,7 @@ exports.getStaffsCovid = (req, res, next) => {
     .then((userIds) => {
       return Covid.find({ userId: userIds }).then((userArr) => {
         if (userArr) {
+          // Check query action
           switch (action) {
             case 'view':
               return res.render('covid/covid-staffs', {
