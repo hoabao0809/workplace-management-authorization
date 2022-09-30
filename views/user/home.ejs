@@ -12,34 +12,35 @@
   </div>
 <% } else { %>
 <div class="home">
-            <div class="wrapper">
-              <div class="card">
-                <img src="<%= user.image[0] %>" alt="Employee_ID">
-                <div class="details">
-                  <div class="details__item">
-                    <span>Trạng thái :</span>
-                    <span>
-                      <% if (user.isWorking) { %>
-                        <span class="online"></span>
-                        <span>Đang làm việc</span>
-                      <% } else { %>
-                        <span class="offline"></span>
-                        <span>Nghỉ</span>
-                      <% } %>
-                    </span>
-                  </div>
-                  <div class="details__item">
-                    <span>Nơi làm việc :</span>
-                    <span><%= user.workplace %></span>
-                  </div>
+    <div class="wrapper">
+      <div class="card">
+        <img src="<%= user.image[0] %>" alt="Employee_ID">
+        <div class="details">
+          <div class="details__item">
+            <span>Trạng thái :</span>
+            <span>
+              <% if (user.isWorking) { %>
+                <span class="online"></span>
+                <span>Đang làm việc</span>
+              <% } else { %>
+                <span class="offline"></span>
+                <span>Nghỉ</span>
+              <% } %>
+            </span>
+          </div>
+          <div class="details__item">
+            <span>Nơi làm việc :</span>
+            <span><%= user.workplace %></span>
+          </div>
 
-                  </div>
-                <div class="info">
-                  <p><%= user.name %></p>
-                </div>
-              </div>
+          </div>
+        <div class="info">
+          <p><%= user.name %></p>
+        </div>
+      </div>
     </div>   
 </div>
+
 </div>
 <% } %>
 

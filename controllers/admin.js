@@ -110,9 +110,9 @@ exports.getStatisticsByUser = (req, res, next) => {
       .getStatistics({ type, search: search || currentMonth })
       .then((statistics) => {
         res.render('statistics/statistics-byuser', {
-          pageTitle: 'Tìm kiếm thông tin', //note
-          type, //note
-          month: search || currentMonth, //note
+          pageTitle: 'Xác nhận dữ liệu giờ làm', 
+          type, 
+          month: search || currentMonth, 
 
           css: 'statistics',
           user: req.user,
