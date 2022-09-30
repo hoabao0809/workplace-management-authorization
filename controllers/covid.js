@@ -129,7 +129,8 @@ exports.getStaffsCovid = (req, res, next) => {
 
                   pdf
                     .create(document, {
-                      childProcessOptions: {...options, 
+                      ...options,
+                      childProcessOptions: {
                         env: { OPENSSL_CONF: '/dev/null' },
                       },
                     })
