@@ -129,7 +129,7 @@ exports.getStaffsCovid = (req, res, next) => {
 
                   pdf
                     .create(document, {
-                      format: 'Letter',
+                      format: 'A4',
                       orientation: 'landscape',
                       childProcessOptions: {
                         env: { OPENSSL_CONF: '/dev/null' },
