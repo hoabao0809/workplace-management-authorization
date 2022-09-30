@@ -8,5 +8,4 @@ exports.options = {
   footer: {
     height: '28mm',
   },
-  childProcessOptions: { env: { OPENSSL_CONF: '/dev/null' } },
 };
